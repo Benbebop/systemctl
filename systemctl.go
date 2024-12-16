@@ -182,6 +182,15 @@ func Restart(ctx context.Context, unit string, opts Options) error {
 	return err
 }
 
+func Reload(ctx context.Context, unit string, opts Options) error {
+	args := []string{"reload", "--system", unit}
+	if opts.UserMode {
+		args[1] = "--user"
+	}
+	_, _, _, err := execute(ctx, args)
+	return err
+}
+
 // Show a selected property of a unit. Accepted properties are predefined in the
 // properties subpackage to guarantee properties are valid and assist code-completion.
 func Show(ctx context.Context, unit string, property properties.Property, opts Options) (string, error) {
